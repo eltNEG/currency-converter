@@ -9,12 +9,12 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(staticCacheName).then(function(cache) {
       return cache.addAll([
-        '/index.html',
-        '/js/idbScript/index.js',
-        "/js/main.js",
-        '/css/index.css',
-        '/js/sw/index.js',
-        "/js/idb/idb.js",
+        '/currency-converter/index.html',
+        '/currency-converter/js/idbScript/index.js',
+        "/currency-converter/js/main.js",
+        '/currency-converter/css/index.css',
+        '/currency-converter/js/sw/index.js',
+        "/currency-converter/js/idb/idb.js",
       ]);
     })
   );
