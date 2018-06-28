@@ -5,11 +5,17 @@ function openDatabase() {
     return Promise.resolve();
   }
 
-  const dbPromise = idb.open("currencyConverter", 1, function(upgradeDb) {
-        const store = upgradeDb.createObjectStore("cachedCurrencies", {
-          keyPath: "value"
-        });
-        store.createIndex("byText", "text");
+  const dbPromise = idb.open("currencyConverter", 2, function(upgradeDb) {
+        switch(upgradeDb.oldVersion){
+          case 0:
+            const store = upgradeDb.createObjectStore("cachedCurrencies", {
+              keyPath: "value"
+            });
+            store.createIndex("byText", "text");
+          case 1:
+            upgradeDb.createObjectStore('conversionRates', {keyPath:"pair"})
+        }
+        
   });
   /*
   dbPromise.then(db => {
