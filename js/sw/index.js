@@ -2,7 +2,7 @@ function registerServiceWorker() {
   const navigator = window.navigator
   if (!navigator.serviceWorker) return;
   
-  navigator.serviceWorker.register("/sw.js", {scope:'/currency-converter/'}).then(function(reg) {    
+  navigator.serviceWorker.register("/currency-converter/sw.js", {scope:'/currency-converter/'}).then(function(reg) {    
     if (!navigator.serviceWorker.controller) {
       console.log('no controller')
       return;
