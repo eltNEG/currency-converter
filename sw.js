@@ -41,12 +41,6 @@ self.addEventListener("fetch", function(event) {
   const requestUrl = new URL(event.request.url);
 
   if (requestUrl.origin === location.origin) {
-    /*
-    console.log(
-      `request url ${requestUrl.origin}
-      location url ${location.origin}
-      pathname ${requestUrl.pathname}
-    `)*/
     if (requestUrl.pathname === '/') {
       console.log('serving root')
       event.respondWith(caches.match('/index.html'))

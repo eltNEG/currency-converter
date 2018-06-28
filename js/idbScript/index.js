@@ -11,18 +11,8 @@ function openDatabase() {
     upgradeDb.createObjectStore('conversionRates', {keyPath:"pair"})
 
   });
-  /*
-  dbPromise.then(db => {
-    const tx = db.transaction("cachedCurrencies", "readwrite");
-    const store = tx.objectStore("cachedCurrencies");
-    store.put({
-      text: 'test',
-      value: "value"
-    })
-  })
-  */
+
   return dbPromise;
 }
 
 window.openDatabase = openDatabase;
-//openDatabase();

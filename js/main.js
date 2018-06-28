@@ -20,7 +20,6 @@ const handleSubmit = () => {
     .then(data => {
       const value = data[`${selectInCurr}_${selectOutCurr}`].val;
       const _value = data[`${selectOutCurr}_${selectInCurr}`].val
-      console.log(value);
       currencyOut.value = currencyIn.value * value;
       dbPromise.then(db => {
         if (!db) {
@@ -106,30 +105,10 @@ fetch(`https://free.currencyconverterapi.com/api/v5/currencies`)
         value: sym
       });
     }
-    /*
-    dbPromise.then(db => {
-      if (!db) {
-        console.log('no db')
-        return
-      };
-      console.log('db seen');
-      const tx = db.transaction("cachedCurrencies", "readwrite");
-      const store = tx.objectStore("cachedCurrencies");
-      options.forEach(option => store.put(option));
-    });
-    */
     makeSelectCurrencyOptions(options);
   })
   .catch(err => {
     console.log(err);
-    /*
-    dbPromise.then(db =>{
-      if(!db) return;
-      const tx = db.transaction("cachedCurrencies")
-      tx.objectStore('cachedCurrencies').index('byText').getAll()
-      .then(currencyOptions => makeSelectCurrencyOptions(currencyOptions))
-    })
-    */
   });
 
 const makeSelectCurrencyOptions = options => {
