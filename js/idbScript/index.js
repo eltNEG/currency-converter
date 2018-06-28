@@ -4,18 +4,12 @@ function openDatabase() {
   if (!navigator.serviceWorker) {
     return Promise.resolve();
   }
+  const previousVersion = "currencyConverter"
+  window.indexedDB.deleteDatabase(previousVersion)
+  const currentVersion = "currencyConverter-v1"
+  const dbPromise = idb.open(currentVersion, 1, function(upgradeDb) {
+    upgradeDb.createObjectStore('conversionRates', {keyPath:"pair"})
 
-  const dbPromise = idb.open("currencyConverter", 2, function(upgradeDb) {
-        switch(upgradeDb.oldVersion){
-          case 0:
-            const store = upgradeDb.createObjectStore("cachedCurrencies", {
-              keyPath: "value"
-            });
-            store.createIndex("byText", "text");
-          case 1:
-            upgradeDb.createObjectStore('conversionRates', {keyPath:"pair"})
-        }
-        
   });
   /*
   dbPromise.then(db => {
