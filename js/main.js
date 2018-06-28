@@ -11,7 +11,7 @@ const handleSubmit = () => {
   if (currencyValIn <= 0) {
     return;
   }
-  currencyOut.placeholder = "converting...";
+  currencyOut.value = "converting...";
   fetch(
     `https://free.currencyconverterapi.com/api/v5/convert?q=${selectInCurr}_${selectOutCurr}&compact=y`
   )
