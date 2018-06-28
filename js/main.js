@@ -49,6 +49,7 @@ fetch(`https://free.currencyconverterapi.com/api/v5/currencies`)
   .then(response =>{ 
     if(!response.ok){
       console.log('fetch error')
+      return
     }
     return response.json()
   }, err => {
@@ -77,7 +78,7 @@ fetch(`https://free.currencyconverterapi.com/api/v5/currencies`)
     makeSelectCurrencyOptions(options);
   })
   .catch(err => {
-    console.log(err)
+    //console.log(err)
     dbPromise.then(db =>{
       if(!db) return;
       const tx = db.transaction("cachedCurrencies")
