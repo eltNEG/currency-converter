@@ -1,4 +1,4 @@
-const staticCacheName = 'currencyConverter-v1';
+const staticCacheName = 'currencyConverter-v2';
 //const contentImgsCache = 'currencyConverter-imgs';
 const allCaches = [
   staticCacheName,
@@ -45,9 +45,10 @@ self.addEventListener("fetch", function(event) {
       location url ${location.origin}
       pathname ${requestUrl.pathname}
     `)*/
-    if (requestUrl.pathname === '/') {
+    console.log(requestUrl.pathname)
+    if (requestUrl.pathname === '/currency-converter') {
       console.log('serving root')
-      event.respondWith(caches.match('/index.html'))
+      event.respondWith(caches.match('currency-converter/index.html'))
     }
   }
 
