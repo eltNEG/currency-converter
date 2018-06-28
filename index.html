@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset="utf-8">
+    <title>Google-Udacity 7 days challenge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/index.css" rel='stylesheet' type="text/css">
+    <!--script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script -->
+</head>
+
+<body>
+    <h1 class='' id='pageTitle'>Free currency converter</h1>
+    <h2>Google Udacity</h2>
+
+    <h3>7 days code challenge</h3>
+
+    <form>
+        <select id='selectInCurr'>
+        </select>
+        <input id='currencyIn' type="number" placeholder="1" autofocus>
+        <div id='arror'>Arror</div>
+        <select id='selectOutCurr'>
+        </select>
+        <input id='currencyOut' type="number" disabled placeholder="1" active='false'>
+        <button onclick="handleSubmit(event)">convert</button>
+    </form>
+
+
+    <footer>
+        <div>By eltneg</div>
+    </footer>
+
+
+</body>
+<!-- Scripts -->
+<script src="./js/idb/idb.js"></script>
+<script src="./js/idbScript/index.js"></script>
+<script src="./js/sw/index.js" ></script>
+<script src="./js/main.js" ></script>
+</html>
