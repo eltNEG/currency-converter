@@ -1,4 +1,4 @@
-const staticCacheName = 'currencyConverter-v3';
+const staticCacheName = 'currencyConverter-v6';
 //const contentImgsCache = 'currencyConverter-imgs';
 const allCaches = [
   staticCacheName,
