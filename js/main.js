@@ -65,6 +65,7 @@ fetch(`https://free.currencyconverterapi.com/api/v5/currencies`)
         value: sym
       });
     }
+    /*
     dbPromise.then(db => {
       if (!db) {
         console.log('no db')
@@ -75,16 +76,19 @@ fetch(`https://free.currencyconverterapi.com/api/v5/currencies`)
       const store = tx.objectStore("cachedCurrencies");
       options.forEach(option => store.put(option));
     });
+    */
     makeSelectCurrencyOptions(options);
   })
   .catch(err => {
-    //console.log(err)
+    console.log(err)
+    /*
     dbPromise.then(db =>{
       if(!db) return;
       const tx = db.transaction("cachedCurrencies")
       tx.objectStore('cachedCurrencies').index('byText').getAll()
       .then(currencyOptions => makeSelectCurrencyOptions(currencyOptions))
     })
+    */
   });
 
 
