@@ -11,6 +11,7 @@ const handleSubmit = () => {
   if (currencyValIn <= 0) {
     return;
   }
+  currencyOut.value = ''
   currencyOut.placeholder = "converting...";
   fetch(
     `https://free.currencyconverterapi.com/api/v5/convert?q=${selectInCurr}_${selectOutCurr}&compact=y`
@@ -77,7 +78,7 @@ fetch(`https://free.currencyconverterapi.com/api/v5/currencies`)
     makeSelectCurrencyOptions(options);
   })
   .catch(err => {
-    console.log(err)
+    //console.log(err)
     dbPromise.then(db =>{
       if(!db) return;
       const tx = db.transaction("cachedCurrencies")
