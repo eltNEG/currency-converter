@@ -1,4 +1,4 @@
-const staticCacheName = 'currencyConverter-v0';
+const staticCacheName = 'currencyConverter-v3';
 //const contentImgsCache = 'currencyConverter-imgs';
 const allCaches = [
   staticCacheName,
@@ -15,6 +15,7 @@ self.addEventListener('install', (event) => {
         '/css/index.css',
         '/js/sw/index.js',
         "/js/idb/idb.js",
+        "https://unpkg.com/babel-standalone@6/babel.min.js"
       ]);
     })
   );
