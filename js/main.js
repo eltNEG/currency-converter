@@ -11,14 +11,14 @@ const handleSubmit = () => {
   if (currencyValIn <= 0) {
     return;
   }
-  currencyOut.value = "converting...";
+  currencyOut.value = ''
+  currencyOut.placeholder = "converting...";
   fetch(
     `https://free.currencyconverterapi.com/api/v5/convert?q=${selectInCurr}_${selectOutCurr}&compact=y`
   )
     .then(resp => resp.json())
     .then(data => {
       const value = data[`${selectInCurr}_${selectOutCurr}`].val;
-      console.log(value);
       currencyOut.value = currencyIn.value * value;
     });
 };
