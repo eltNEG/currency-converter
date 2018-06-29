@@ -11,15 +11,53 @@ const handleSubmit = () => {
   if (currencyValIn <= 0) {
     return;
   }
-  currencyOut.value = ''
+  currencyOut.value = "";
   currencyOut.placeholder = "converting...";
   fetch(
-    `https://free.currencyconverterapi.com/api/v5/convert?q=${selectInCurr}_${selectOutCurr}&compact=y`
+    `https://free.currencyconverterapi.com/api/v5/convert?q=${selectInCurr}_${selectOutCurr},${selectOutCurr}_${selectInCurr}&compact=y`
   )
     .then(resp => resp.json())
     .then(data => {
       const value = data[`${selectInCurr}_${selectOutCurr}`].val;
+      const _value = data[`${selectOutCurr}_${selectInCurr}`].val;
       currencyOut.value = currencyIn.value * value;
+      dbPromise.then(db => {
+        if (!db) {
+          console.log("no db");
+          return;
+        }
+        const tx = db.transaction("conversionRates", "readwrite");
+        const store = tx.objectStore("conversionRates");
+        store.put({
+          pair: `${selectInCurr}_${selectOutCurr}`,
+          rate: value,
+          time: new Date()
+        });
+        store.put({
+          pair: `${selectOutCurr}_${selectInCurr}`,
+          rate: _value,
+          time: new Date()
+        });
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dbPromise.then(db => {
+        if (!db) return;
+        const tx = db.transaction("conversionRates");
+        const store = tx.objectStore("conversionRates");
+        store.openCursor().then(function findPair(cursor) {
+          if (!cursor) {
+            currencyOut.placeholder = "ERROR!";
+            return;
+          }
+          if (cursor.value.pair === `${selectInCurr}_${selectOutCurr}`) {
+            currencyOut.value = currencyIn.value * cursor.value.rate;
+            return;
+          }
+          return cursor.continue().then(findPair);
+        });
+      });
     });
 };
 
@@ -46,15 +84,18 @@ arrow.addEventListener(
 );
 
 fetch(`https://free.currencyconverterapi.com/api/v5/currencies`)
-  .then(response =>{ 
-    if(!response.ok){
-      console.log('fetch error')
-      return
+  .then(
+    response => {
+      if (!response.ok) {
+        console.log("fetch error");
+        return;
+      }
+      return response.json();
+    },
+    err => {
+      console.log(err);
     }
-    return response.json()
-  }, err => {
-    console.log(err)
-  })
+  )
   .then(response => {
     const currencies = response.results;
     const symbols = Object.keys(currencies);
@@ -65,28 +106,11 @@ fetch(`https://free.currencyconverterapi.com/api/v5/currencies`)
         value: sym
       });
     }
-    dbPromise.then(db => {
-      if (!db) {
-        console.log('no db')
-        return
-      };
-      console.log('db seen');
-      const tx = db.transaction("cachedCurrencies", "readwrite");
-      const store = tx.objectStore("cachedCurrencies");
-      options.forEach(option => store.put(option));
-    });
     makeSelectCurrencyOptions(options);
   })
   .catch(err => {
-    //console.log(err)
-    dbPromise.then(db =>{
-      if(!db) return;
-      const tx = db.transaction("cachedCurrencies")
-      tx.objectStore('cachedCurrencies').index('byText').getAll()
-      .then(currencyOptions => makeSelectCurrencyOptions(currencyOptions))
-    })
+    console.log(err)
   });
-
 
 const makeSelectCurrencyOptions = options => {
   let optionListIn = document.getElementById("selectInCurr");

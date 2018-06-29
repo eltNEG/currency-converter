@@ -1,4 +1,4 @@
-const staticCacheName = 'currencyConverter-v4';
+const staticCacheName = 'currencyConverter-v5';
 //const contentImgsCache = 'currencyConverter-imgs';
 const allCaches = [
   staticCacheName,
@@ -15,6 +15,8 @@ self.addEventListener('install', (event) => {
         '/currency-converter/css/index.css',
         '/currency-converter/js/sw/index.js',
         "/currency-converter/js/idb/idb.js",
+        "https://unpkg.com/babel-standalone@6/babel.min.js",
+        "https://free.currencyconverterapi.com/api/v5/currencies"
       ]);
     })
   );

@@ -4,25 +4,13 @@ function openDatabase() {
   if (!navigator.serviceWorker) {
     return Promise.resolve();
   }
-
-  const dbPromise = idb.open("currencyConverter", 1, function(upgradeDb) {
-        const store = upgradeDb.createObjectStore("cachedCurrencies", {
-          keyPath: "value"
-        });
-        store.createIndex("byText", "text");
+  const previousVersion = "currencyConverter"
+  window.indexedDB.deleteDatabase(previousVersion)
+  const currentVersion = "currencyConverter-v1"
+  const dbPromise = idb.open(currentVersion, 1, function(upgradeDb) {
+    upgradeDb.createObjectStore('conversionRates', {keyPath:"pair"})
   });
-  /*
-  dbPromise.then(db => {
-    const tx = db.transaction("cachedCurrencies", "readwrite");
-    const store = tx.objectStore("cachedCurrencies");
-    store.put({
-      text: 'test',
-      value: "value"
-    })
-  })
-  */
   return dbPromise;
 }
 
 window.openDatabase = openDatabase;
-//openDatabase();
