@@ -48,7 +48,7 @@ const handleSubmit = () => {
         const store = tx.objectStore("conversionRates");
         store.openCursor().then(function findPair(cursor) {
           if (!cursor) {
-            currencyOut.placeholder = "ERROR!";
+            currencyOut.placeholder = "NETWORK ERROR!";
             return;
           }
           if (cursor.value.pair === `${selectInCurr}_${selectOutCurr}`) {
@@ -124,5 +124,7 @@ const makeSelectCurrencyOptions = options => {
     optionListOut.add(new Option(option.text, option.value, option.selected))
   );
 };
+
+fetch('./js/ping').catch(()=>setTimeout(() => alert('This page is being served in offline mode.'), 3000))
 
 window.handleSubmit = handleSubmit;
