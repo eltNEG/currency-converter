@@ -124,4 +124,6 @@ const makeSelectCurrencyOptions = options => {
   );
 };
 
+fetch('./js/ping').catch(()=>setTimeout(() => alert('This page is being served in offline mode'), 3000))
+
 window.handleSubmit = handleSubmit;

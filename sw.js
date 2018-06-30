@@ -1,4 +1,4 @@
-const staticCacheName = 'currencyConverter-v6';
+const staticCacheName = 'currencyConverter-v0';
 //const contentImgsCache = 'currencyConverter-imgs';
 const allCaches = [
   staticCacheName,
@@ -17,7 +17,7 @@ self.addEventListener('install', (event) => {
         "/js/idb/idb.js",
         "https://unpkg.com/babel-standalone@6/babel.min.js",
         "https://free.currencyconverterapi.com/api/v5/currencies"
-      ]);
+      ]).then((msg) =>console.log(msg)).catch(err => console.log("cache errror " + err));
     })
   );
 });
@@ -39,7 +39,6 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener("fetch", function(event) {
   const requestUrl = new URL(event.request.url);
-
   if (requestUrl.origin === location.origin) {
     if (requestUrl.pathname === '/') {
       console.log('serving root')
@@ -50,6 +49,8 @@ self.addEventListener("fetch", function(event) {
   event.respondWith(
     caches.match(event.request).then(function(response) {
       return response || fetch(event.request);
+    }).catch(err => {
+      console.log("Unable to fetch script from the network. Page in offline mode.")
     })
   );
 });
