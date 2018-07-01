@@ -69,7 +69,7 @@ body {
     border-top: solid 7px;
     border-top-color: skyblue;
     height: 350px;
-    width: 300px;
+    width: 270px;
     background-color: white;
     margin: 0 auto 0 auto;
     box-shadow: 3px 4px rgba(0, 0, 0, 0.076);
@@ -113,7 +113,7 @@ body {
     margin-top: 5px;
     padding-right: 10px;
     width: 95%;
-    height: 30px;
+    height: 32px;
     text-align: right;
     border-radius: 5px;
     border: solid 2px;
@@ -141,7 +141,7 @@ select {
     height: 35px;
     border-radius: 5px;
     margin-top: 5px;
-    
+    padding-left: 30px
 }
 
 #arror {
