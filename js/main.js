@@ -6,8 +6,13 @@ const handleSubmit = () => {
   event.preventDefault();
   const currencyValIn = document.getElementById("currencyIn").value;
   const currencyOut = document.getElementById("currencyOut");
-  const selectInCurr = document.getElementById("selectInCurr").value;
-  const selectOutCurr = document.getElementById("selectOutCurr").value;
+  const selectInCurrr = document.getElementById("selectInCurr").value;
+  const selectOutCurrr = document.getElementById("selectOutCurr").value;
+  const symbol = selectOutCurrr.split(' ')[1] === 'undefined' ? '' : selectOutCurrr.split(' ')[1];
+
+  const selectInCurr = selectInCurrr.split(' ')[0]
+  const selectOutCurr = selectOutCurrr.split(' ')[0]
+
   if (currencyValIn <= 0) {
     return;
   }
@@ -20,7 +25,7 @@ const handleSubmit = () => {
     .then(data => {
       const value = data[`${selectInCurr}_${selectOutCurr}`].val;
       const _value = data[`${selectOutCurr}_${selectInCurr}`].val
-      currencyOut.value = currencyIn.value * value;
+      currencyOut.value = `${symbol} ${currencyIn.value * value}`;
       dbPromise.then(db => {
         if (!db) {
           console.log("no db");
@@ -48,11 +53,11 @@ const handleSubmit = () => {
         store.openCursor()
         .then(function findPair(cursor) {
           if(!cursor) {
-            currencyOut.placeholder = 'ERROR!'
+            currencyOut.placeholder = 'NETWORK ERROR!'
             return
           }
           if (cursor.value.pair === `${selectInCurr}_${selectOutCurr}`){
-            currencyOut.value = currencyIn.value * cursor.value.rate;
+            currencyOut.value = `${symbol} ${currencyIn.value * cursor.value.rate}`;
             return
           }
           return cursor.continue().then(findPair)
@@ -70,10 +75,8 @@ arrow.addEventListener(
     const currencyIn = document.getElementById("currencyIn");
     const currencyOut = document.getElementById("currencyOut");
 
-    let inVal = currencyIn.value;
-    let outVal = currencyOut.value;
-    currencyIn.value = outVal;
-    currencyOut.value = inVal;
+    currencyIn.value = '';
+    currencyOut.value = 0;
 
     let selectedInCurr = selectInCurr.value;
     let selectedOutCurr = selectOutCurr.value;
@@ -102,7 +105,7 @@ fetch(`https://free.currencyconverterapi.com/api/v5/currencies`)
     for (const sym of symbols) {
       options.push({
         text: currencies[sym].currencyName,
-        value: sym
+        value: `${sym} ${currencies[sym].currencySymbol}`,
       });
     }
     makeSelectCurrencyOptions(options);
@@ -113,9 +116,9 @@ fetch(`https://free.currencyconverterapi.com/api/v5/currencies`)
 
 const makeSelectCurrencyOptions = options => {
   let optionListIn = document.getElementById("selectInCurr");
-  options.forEach(option =>
+  options.forEach(option =>{
     optionListIn.add(new Option(option.text, option.value, option.selected))
-  );
+  });
 
   let optionListOut = document.getElementById("selectOutCurr");
 
