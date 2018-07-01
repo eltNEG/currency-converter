@@ -15,6 +15,7 @@ self.addEventListener('install', (event) => {
         '/css/index.css',
         '/js/sw/index.js',
         "/js/idb/idb.js",
+        "/images/arrow.png",
         "https://unpkg.com/babel-standalone@6/babel.min.js",
         "https://free.currencyconverterapi.com/api/v5/currencies"
       ]).then((msg) =>console.log(msg)).catch(err => console.log("cache errror " + err));
