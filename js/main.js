@@ -105,7 +105,7 @@ fetch(`https://free.currencyconverterapi.com/api/v5/currencies`)
     let options = [];
     for (const sym of symbols) {
       options.push({
-        text: currencies[sym].currencyName,
+        text: `${sym} - ${currencies[sym].currencyName}`,
         value: `${sym} ${currencies[sym].currencySymbol}`,
       });
     }
