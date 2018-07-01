@@ -15,9 +15,10 @@ self.addEventListener('install', (event) => {
         '/currency-converter/css/index.css',
         '/currency-converter/js/sw/index.js',
         "/currency-converter/js/idb/idb.js",
+        "/currency-converter/images/arrow.png",
         "https://unpkg.com/babel-standalone@6/babel.min.js",
         "https://free.currencyconverterapi.com/api/v5/currencies"
-      ]);
+      ]).then((msg) =>console.log(msg)).catch(err => console.log("cache errror " + err));
     })
   );
 });
@@ -39,7 +40,6 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener("fetch", function(event) {
   const requestUrl = new URL(event.request.url);
-
   if (requestUrl.origin === location.origin) {
     
     if (requestUrl.pathname === '/currency-converter/') {
@@ -51,6 +51,8 @@ self.addEventListener("fetch", function(event) {
   event.respondWith(
     caches.match(event.request).then(function(response) {
       return response || fetch(event.request);
+    }).catch(err => {
+      console.log("Unable to fetch script from the network. Page in offline mode.")
     })
   );
 });

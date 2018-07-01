@@ -22,7 +22,7 @@ function registerServiceWorker() {
       _trackInstalling(reg.installing);
     });
     
-  }).catch(() => console.log('sw not registered'));
+  }).catch((err) => console.log('sw not registered. error = ' + err));
 
   // Ensure refresh is only called once.
   // This works around a bug in "force update on reload".

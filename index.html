@@ -10,27 +10,36 @@
 </head>
 
 <body>
-    <h1 class='' id='pageTitle'>Free currency converter</h1>
-    <h2>Google Udacity</h2>
+    <div class="outer-frame">
+        <h2 class='' id='page-header'>Free Currency Converter</h2>
+        <div class="inner-frame">
+            <div class="value-text">Value</div>
+            <form>
+                <input id='currencyOut' type="text" disabled placeholder="0" active='false'>
 
-    <h3>7 days code challenge</h3>
+                <div class="amount-text">Amount</div>
+                <input id='currencyIn' type="number" placeholder="0" autofocus>
 
-    <form>
-        <select id='selectInCurr'>
-        </select>
-        <input id='currencyIn' type="number" placeholder="1" autofocus>
-        <div id='arror'>Arror</div>
-        <select id='selectOutCurr'>
-        </select>
-        <input id='currencyOut' type="number" disabled placeholder="1" active='false'>
-        <button onclick="handleSubmit(event)">convert</button>
-    </form>
+                <div class="row selection">
+                    <div class="col-5">
+                        <div class="label-text">From</div>
+                        <select id='selectInCurr'>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <img id='arror' src="./images/arrow.png" alt="Arrow">
+                    </div>
+                    <div class="col-5">
+                        <div class="label-text">To</div>
+                        <select id='selectOutCurr'>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="handleSubmit(event)">CONVERT</button>
+            </form>
+        </div>
 
-
-    <footer>
-        <div>By eltneg</div>
-    </footer>
-
+    </div>
 
 </body>
 <!-- Scripts -->
